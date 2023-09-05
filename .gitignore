@@ -1,0 +1,21 @@
+# API keys and secrets
+.env
+
+# Dependency directory
+node_modules
+
+# Editors
+.code-workspace
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist/**/*
+
+# ignore yarn.lock
+yarn.lock
+
+# ignore package-lock.lock
+package-lock.json
