@@ -23,6 +23,24 @@ app.get('/api/', (req: Request, res: Response) => {
     res.json(currentTime)
 });
 
+
+app.use("/api/whoami", (req: Request, res: Response) => {
+    console.log(req.headers)
+    const ipData = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    const ip = ipData ? ipData.toString() : "No IP" 
+    const {host, "user-agent": userAgent, "accept-language": language} = req.headers
+    const data = {
+        "ipaddress": ip.replace("::ffff:", ""),
+        "language": language,
+        "software":userAgent
+    }
+
+    console.log("Data: ", data)
+    console.log("Host: ", host)
+
+    res.json(data)
+});
+
 app.get('/api/:date', (req: Request, res: Response) => {
 
     if(req.params.date) { 
@@ -44,7 +62,7 @@ app.get('/api/:date', (req: Request, res: Response) => {
       
         const utc = date.toUTCString()
         const unix = date.getTime() 
-        
+
         console.log(`
             {
                 req.params.date: ${req.params.date},
