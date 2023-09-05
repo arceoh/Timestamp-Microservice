@@ -6,6 +6,10 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+var cors = require('cors');
+app.use(cors({optionsSuccessStatus: 200}));
+
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
@@ -34,18 +38,18 @@ app.get('/api/:date', (req: Request, res: Response) => {
         const unix = date.getTime()       
         console.log(`
             {
+                req.params.date: ${req.params.date},
                 allInts: ${allInts},
                 type: ${typeof req.params.date},
                 stringDate: ${new Date(`"${req.params.date}"`)  }
-                req.params.date: ${req.params.date},
                 date: ${date},
                 unix: ${unix},
                 utc: ${utc}
             }
         `)
         res.json({
-            unix: unix,
-            utc: utc
+            unix,
+            utc
         })
     
     }
