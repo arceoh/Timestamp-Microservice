@@ -23,19 +23,26 @@ app.get('/api/:date', (req: Request, res: Response) => {
 
     if(req.params.date) { 
 
-    
-        // let allInts =   req.params.date.trim().split('').every(item => parseInt(item)) // Check if all characters are integers
-
-
        // async .every method
-        const allInts =  req.params.date.trim().split('').every(async item => {
-            const isInt = await parseInt(item)
-            return isInt
-        }) // Check if all characters are integers
+       const allInts = Array.from(req.params.date.trim()).every(item => {
+        const isInt = !isNaN(parseInt(item));
+        return isInt;
+      });
 
-        const date = allInts ? new Date(parseInt(req.params.date)) :  new Date(`${req.params.date}`)  
+        const date =  allInts ? new Date(parseInt(req.params.date)) :  new Date(`"${req.params.date}"`)  
         const utc = date.toUTCString()
         const unix = date.getTime()       
+        console.log(`
+            {
+                allInts: ${allInts},
+                type: ${typeof req.params.date},
+                stringDate: ${new Date(`"${req.params.date}"`)  }
+                req.params.date: ${req.params.date},
+                date: ${date},
+                unix: ${unix},
+                utc: ${utc}
+            }
+        `)
         res.json({
             unix: unix,
             utc: utc
@@ -43,9 +50,6 @@ app.get('/api/:date', (req: Request, res: Response) => {
     
     }
 });
-
-
-
 
 
 app.listen(port, () => {
