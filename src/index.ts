@@ -1,14 +1,14 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from "cors";
+
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-var cors = require('cors');
-app.use(cors({optionsSuccessStatus: 200}));
-
+app.use(cors<Request>({optionsSuccessStatus: 200}));
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
@@ -59,3 +59,5 @@ app.get('/api/:date', (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+
+
