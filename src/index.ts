@@ -34,8 +34,17 @@ app.get('/api/:date', (req: Request, res: Response) => {
       });
 
         const date =  allInts ? new Date(parseInt(req.params.date)) :  new Date(`"${req.params.date}"`)  
+
+
+        if(date.toString() === "Invalid Date") {
+            res.json({
+                error: "Invalid Date"
+            })
+        }
+      
         const utc = date.toUTCString()
-        const unix = date.getTime()       
+        const unix = date.getTime() 
+        
         console.log(`
             {
                 req.params.date: ${req.params.date},
