@@ -16,7 +16,7 @@ app.get('/api/', (req: Request, res: Response) => {
         unix: Date.now(),
         utc: new Date().toUTCString()
     }
-    res.send(currentTime)
+    res.json(currentTime)
 });
 
 app.get('/api/:date', (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ app.get('/api/:date', (req: Request, res: Response) => {
         const date = allInts ? new Date(parseInt(req.params.date)) :  new Date(`${req.params.date}`)  
         const utc = date.toUTCString()
         const unix = date.getTime()       
-        res.send({
+        res.json({
             unix: unix,
             utc: utc
         })
